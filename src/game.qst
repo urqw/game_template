@@ -1,0 +1,87 @@
+/*
+The file encoding is UTF-8 without BOM; the newline format is LF
+This file is part of UrqW Game Template.
+SPDX-License-Identifier: CC0-1.0
+*/
+
+obj_chalk="[[piece of chalk|take_chalk]]"
+obj_rag="[[rag|take_rag]]"
+
+:room
+pln You are in the room.
+if inscription <> "" then pln There is "#inscription$" written on the wall.
+proc objects
+if not inv_Chalk then btn take_chalk, Take the piece of chalk
+if not inv_Rag then btn take_rag, Take the rag
+if inscription = "" and inv_Chalk then btn write, write on the wall
+if inscription <> "" and inv_Rag then btn clear, Clear the wall
+btn leave, Leave the room
+end
+
+:objects
+if inv_Chalk and inv_Rag then end
+pln There is a 
+if not inv_Chalk and not inv_Rag then p #obj_chalk$ and a #obj_rag$
+if not inv_Chalk and inv_Rag then p #obj_chalk$
+if inv_Chalk and not inv_Rag then p #obj_rag$
+p  on the floor.
+end
+
+:take_chalk
+inv+ Chalk
+pln You took the piece of chalk.
+goto room
+
+:use_Chalk
+cls
+pln An ordinary piece of chalk.
+goto room
+
+:use_Chalk_drop
+cls
+inv- Chalk
+pln You dropped the piece of chalk on the floor.
+goto room
+
+:use_Chalk_use
+cls
+goto write
+
+:take_Rag
+inv+ Rag
+pln You took the rag.
+goto room
+
+:use_Rag
+cls
+pln An ordinary rag.
+goto room
+
+:use_Rag_drop
+cls
+inv- Rag
+pln You dropped the rag on the floor.
+goto room
+
+:use_Rag_use
+cls
+goto clear
+
+:write
+pln Enter the text you want to write on the wall:
+input inscription
+cls
+hide_use_Chalk_use = 1
+hide_use_Rag_use = 0
+goto room
+
+:clear
+pln You cleaned the wall with the rag.
+inscription = ""
+hide_use_Chalk_use = 0
+hide_use_Rag_use = 1
+goto room
+
+:leave
+pln What are we doing here, really?
+quit

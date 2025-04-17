@@ -1,0 +1,34 @@
+{
+  "name": "urqw_game_template",
+  "version": "0.1.0",
+  "description": "Template of a new game for the UrqW text-based game engine.",
+  "main": "node_modules/urqw/index.html#src",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "manifest": "node scripts/manifest.js",
+    "postinstall": "cd node_modules/urqw && npm install --production",
+    "start": "npx live-server --open=node_modules/urqw/index.html#src --watch=node_modules/urqw/quests/src.zip",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urqw/game_template.git"
+  },
+  "keywords": [
+    "urq",
+    "interactive fiction",
+    "text-based game"
+  ],
+  "author": "UrqW",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/urqw/game_template/issues"
+  },
+  "homepage": "https://github.com/urqw/game_template#readme",
+  "devDependencies": {
+    "archiver": "^7.0.1",
+    "live-server": "^1.2.2",
+    "urqw": "github:urqw/UrqW",
+    "uuid": "^11.1.0"
+  }
+}
