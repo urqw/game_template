@@ -34,7 +34,7 @@ Additional actions if desired:
 
 Workflow:
 
-1. All game data is stored in the src directory. This is where the game development takes place.
+1. All game data is stored in the urqw directory. This is where the game development takes place.
 2. Make your first changes to the game files and build the project:
 	```shell
 	npm run build

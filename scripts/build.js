@@ -9,9 +9,9 @@ const archiver = require('archiver');
 
 const rootDir = path.resolve(__dirname, '..');
 
-const srcDir = path.join(rootDir, 'src');
+const urqwDir = path.join(rootDir, 'urqw');
 const targetDir = path.join(rootDir, 'node_modules', 'urqw', 'quests');
-const targetFile = path.join(targetDir, 'src.zip');
+const targetFile = path.join(targetDir, 'urqw.zip');
 
 const output = fs.createWriteStream(targetFile);
 const archive = archiver('zip', {
@@ -40,7 +40,7 @@ try {
     }
 }
 
-archive.directory(srcDir, false);
+archive.directory(urqwDir, false);
 
 archive.pipe(output);
 archive.finalize();

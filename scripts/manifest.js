@@ -9,7 +9,7 @@ const readline = require('readline');
 const uuid = require('uuid');
 
 const rootDir = path.resolve(__dirname, '..');
-const manifestPath = path.join(rootDir, 'src', 'manifest.json');
+const manifestPath = path.join(rootDir, 'urqw', 'manifest.json');
 
 const rl = readline.createInterface({
     input: process.stdin,
