@@ -5,8 +5,9 @@
   "main": "node_modules/urqw/index.html?debug=1#urqw",
   "scripts": {
     "build": "node scripts/build.js",
+    "docs": "node scripts/docs.js",
     "manifest": "node scripts/manifest.js",
-    "postinstall": "cd node_modules/urqw && npm install --production",
+    "postinstall": "cd node_modules/urqw && npm install && npm run gen-docs",
     "start": "npx live-server --open=node_modules/urqw/index.html?debug=1#urqw --watch=node_modules/urqw/quests/urqw.zip",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,6 +29,7 @@
   "devDependencies": {
     "archiver": "^7.0.1",
     "live-server": "^1.2.2",
+    "open": "^10.2.0",
     "urqw": "github:urqw/UrqW",
     "uuid": "^11.1.0"
   }

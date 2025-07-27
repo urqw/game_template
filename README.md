@@ -35,19 +35,23 @@ Additional actions if desired:
 Workflow:
 
 1. All game data is stored in the urqw directory. This is where the game development takes place.
-2. Make your first changes to the game files and build the project:
+2. Open the UrqW documentation if needed:
+	```shell
+	npm run docs
+	```
+3. Make your first changes to the game files and build the project:
 	```shell
 	npm run build
 	```
-3. After the first build, run a local web server with an interpreter to debug the game you are developing:
+4. After the first build, run a local web server with an interpreter to debug the game you are developing:
 	```shell
 	npm start
 	```
-4. After significant changes to the project, rebuild it:
+5. After significant changes to the project, rebuild it:
 	```shell
 	npm run build
 	```
 	The web server with the running interpreter will automatically track the build update and initiate a reload of the page with the new version of the game.
-5. Continue developing the game and debugging it in the running interpreter. In parallel, you can use the version control system to save the development history. Binary builds of the game will not be included in the Git history.
+6. Continue developing the game and debugging it in the running interpreter. In parallel, you can use the version control system to save the development history. Binary builds of the game will not be included in the Git history.
 
 For details, please refer to the UrqW documentation.
