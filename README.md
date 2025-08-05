@@ -53,5 +53,11 @@ Workflow:
 	```
 	The web server with the running interpreter will automatically track the build update and initiate a reload of the page with the new version of the game.
 6. Continue developing the game and debugging it in the running interpreter. In parallel, you can use the version control system to save the development history. Binary builds of the game will not be included in the Git history.
+7. Once the game is ready, you can build the release as an archive:
+	```shell
+	npm run release
+	```
+	This archive is suitable for running in UrqW. \
+	Or you can add the game repository to the UrqW instance repository as a Git submodule. The template structure meets the necessary UrqW requirements for adding games as submodules.
 
 For details, please refer to the UrqW documentation.
