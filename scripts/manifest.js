@@ -36,9 +36,9 @@ async function promptUser(currentValue, promptText) {
     return new Promise((resolve) => {
         let question;
         if (currentValue) {
-            question = `${promptText} (current value: "${currentValue}"),\nor enter an empty string to leave the current value unchanged: `;
+            question = `${promptText}\n(current value: "${currentValue}"),\nor enter an empty string to leave the current value unchanged:\n> `;
         } else {
-            question = `${promptText}: `;
+            question = `${promptText}:\n> `;
         }
         rl.question(question, (answer) => {
             resolve(answer.trim() || currentValue);
@@ -53,11 +53,11 @@ async function main() {
         const urqw_title = await promptUser(manifest.urqw_title || '', 'Enter the game page title');
         manifest.urqw_title = urqw_title;
     
-        const urqw_game_lang = await promptUser(manifest.urqw_game_lang || '', 'Enter the game text language code');
+        const urqw_game_lang = await promptUser(manifest.urqw_game_lang || '', 'Enter the game text language (an ISO-639 two- or three-letter language code, optionally followed by a hyphen and an ISO-3166 country code)');
         manifest.urqw_game_lang = urqw_game_lang;
     
         let ifidGen = false;
-if (!manifest.urqw_game_ifid) {
+        if (!manifest.urqw_game_ifid) {
             manifest.urqw_game_ifid = uuid.v4().toUpperCase();
             ifidGen = true;
         }
