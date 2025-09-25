@@ -54,7 +54,7 @@ function validateXML(xml) {
     }
 }
 
-function getValue(xmlDoc, path, defaultValue) {
+function getValue(xmlDoc, path, defaultValue, br = false) {
     try {
         const parts = path.split('/');
         let currentNode = xmlDoc.documentElement;
@@ -65,13 +65,39 @@ function getValue(xmlDoc, path, defaultValue) {
             currentNode = nodes[0];
         }
 
-        const value = currentNode.textContent.trim() || '';
+        let value;
+        if (br) {
+            value = extractTextWithBr(currentNode).trim();
+        } else {
+            value = currentNode.textContent.trim() || '';
+        }
 
         return value === '' ? defaultValue : value;
     } catch (error) {
         console.error('Error getting iFiction record value:', error);
         return defaultValue;
     }
+}
+
+// Define constants for node types
+const TEXT_NODE = 3;
+const ELEMENT_NODE = 1;
+
+// Function to extract text while keeping only tags <br/>
+function extractTextWithBr(node) {
+    let result = '';
+    for (let i = 0; i < node.childNodes.length; i++) {
+        const child = node.childNodes[i];
+        if (child.nodeType === TEXT_NODE) {
+            result += child.textContent.trim();
+        } else if (child.nodeType === ELEMENT_NODE) {
+            if (child.tagName.toUpperCase() === 'BR') {
+                result += `<${child.tagName}/>`;
+            }
+            result += extractTextWithBr(child);
+        }
+    }
+    return result;
 }
 
 async function promptUser(currentValue, promptText) {
@@ -170,7 +196,7 @@ let title = await promptUser(
         );
 
         const description = await promptUser(
-            xmlDoc ? getValue(xmlDoc, 'story/bibliographic/description', '') : '',
+            xmlDoc ? getValue(xmlDoc, 'story/bibliographic/description', '', true) : '',
             'Enter the game description (for paragraph breaks, use the <br/> tag)'
         );
 
