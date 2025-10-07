@@ -46,7 +46,7 @@ async function main() {
             manifest.game_encoding = 'UTF-8';
         }
 
-        if (manifest.urq_mode !== 'dosurq' && manifest.urq_mode !== 'ripurq') {
+        if (!['ripurq', 'dosurq', 'akurq'].includes(manifest.urq_mode)) {
             manifest.urq_mode = 'urqw';
         }
 
