@@ -4,40 +4,40 @@
  */
 
 const fs = require('fs');
+const fsp = require('fs').promises;
 const path = require('path');
 const archiver = require('archiver');
-const fsp = require('fs').promises;
+
+const { rootDir, urqwDir } = require('./common');
 
 async function packRelease() {
     try {
-        const rootPath = path.resolve(__dirname, '..');
-        const releasePath = path.join(rootPath, 'release');
-        const packagePath = path.join(rootPath, 'package.json');
+        const releaseDir = path.join(rootDir, 'release');
+        const packageFile = path.join(rootDir, 'package.json');
 
         // Name and version of build
-        const packageData = await fsp.readFile(packagePath, 'utf8');
+        const packageData = await fsp.readFile(packageFile, 'utf8');
         const { name, version } = JSON.parse(packageData);
         const buildName = `${name}_${version}.zip`;
 
         // Check the existence and clean the release directory
         try {
-            await fsp.access(releasePath);
-            await fsp.rm(releasePath, { recursive: true });
+            await fsp.access(releaseDir);
+            await fsp.rm(releaseDir, { recursive: true });
         } catch (err) {
             // If the directory does not exist, just continue
         }
 
-        await fsp.mkdir(releasePath);
+        await fsp.mkdir(releaseDir);
 
-        // Define  and check the existence the urqw directory
-        const urqwPath = path.join(rootPath, 'urqw');
-        const stats = await fsp.lstat(urqwPath);
+        // Check the existence the urqw directory
+        const stats = await fsp.lstat(urqwDir);
         if (!stats.isDirectory()) {
             throw new Error('Directory urqw not found or is not a directory.');
         }
 
         // Create an archive
-        const output = fs.createWriteStream(path.join(releasePath, buildName));
+        const output = fs.createWriteStream(path.join(releaseDir, buildName));
         const archive = archiver('zip', { zlib: { level: 9 } });
 
         archive
@@ -45,11 +45,11 @@ async function packRelease() {
                 throw new Error('Error creating archive: ' + err.message);
             })
             .on('close', () => {
-                console.log(`Release build completed successfully. Archive created at path: ${path.join(releasePath, buildName)}`);
+                console.log(`Release build completed successfully. Archive created at path: ${path.join(releaseDir, buildName)}`);
             });
 
         archive.pipe(output);
-        archive.directory(urqwPath, false);
+        archive.directory(urqwDir, false);
         await archive.finalize();
         await new Promise((resolve, reject) => {
             output.on('close', resolve);

@@ -4,32 +4,12 @@
  */
 
 const fs = require('fs');
-const path = require('path');
-const readline = require('readline');
 const uuid = require('uuid');
 
-const rootDir = path.resolve(__dirname, '..');
-const manifestPath = path.join(rootDir, 'urqw', 'manifest.json');
+const { rootDir, manifestFile, rl, readManifest } = require('./common');
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-async function readManifest() {
-    try {
-        const data = await fs.promises.readFile(manifestPath, 'utf-8');
-        return JSON.parse(data);
-    } catch (err) {
-        if (err.code === 'ENOENT') {
-            return {};
-        }
-        throw err;
-    }
-}
-
-async function writeManifest(data) {
-    await fs.promises.writeFile(manifestPath, JSON.stringify(data, null, 2), 'utf-8');
+async function writeManifest(file, data) {
+    await fs.promises.writeFile(file, JSON.stringify(data, null, 2), 'utf-8');
 }
 
 async function promptUser(currentValue, promptText) {
@@ -48,7 +28,7 @@ async function promptUser(currentValue, promptText) {
 
 async function main() {
     try {
-        const manifest = await readManifest();
+        const manifest = await readManifest(manifestFile);
     
         const urqw_title = await promptUser(manifest.urqw_title || '', 'Enter the game page title');
         manifest.urqw_title = urqw_title;
@@ -72,7 +52,7 @@ async function main() {
 
         manifest.manifest_version = 1;
 
-        await writeManifest(manifest);
+        await writeManifest(manifestFile, manifest);
     
         let = message = 'Successfully saved manifest.json';
         if (ifidGen) {

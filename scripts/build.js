@@ -4,43 +4,51 @@
  */
 
 const fs = require('fs');
+const fsp = require('fs').promises;
 const path = require('path');
 const archiver = require('archiver');
 
-const rootDir = path.resolve(__dirname, '..');
+const { rootDir, urqwDir } = require('./common');
 
-const urqwDir = path.join(rootDir, 'urqw');
-const targetDir = path.join(rootDir, 'node_modules', 'urqw', 'quests');
-const targetFile = path.join(targetDir, 'urqw.zip');
+async function build() {
+    try {
+        const targetDir = path.join(rootDir, 'node_modules', 'urqw', 'quests');
+        const targetFile = path.join(targetDir, 'urqw.zip');
 
-const output = fs.createWriteStream(targetFile);
-const archive = archiver('zip', {
-    zlib: { level: 9 }
-});
+        await fsp.mkdir(targetDir, { recursive: true });
 
-output.on('close', () => {
-    console.log('The build was completed successfully:', targetFile);
-});
+        const output = fs.createWriteStream(targetFile);
+        const archive = archiver('zip', {
+            zlib: { level: 9 }
+        });
 
-output.on('error', (err) => {
-    console.error('Error while archiving:', err);
-    process.exit(1);
-});
+        output.on('close', () => {
+            console.log('The build was completed successfully:', targetFile);
+            process.exit(0);
+        });
 
-archive.on('error', (err) => {
-    console.error('Archiver error:', err);
-    process.exit(1);
-});
+        output.on('error', (err) => {
+            console.error('Error while archiving:', err);
+            process.exit(1);
+        });
 
-try {
-    fs.mkdirSync(targetDir, { recursive: true });
-} catch (err) {
-    if (err.code !== 'EEXIST') {
-        throw err;
+        archive.on('error', (err) => {
+            console.error('Archiver error:', err);
+            process.exit(1);
+        });
+
+        archive.directory(urqwDir, false);
+        archive.pipe(output);
+        await new Promise((resolve, reject) => {
+            archive.finalize((err) => {
+                if (err) return reject(err);
+                resolve();
+            });
+        });
+    } catch (err) {
+        console.error('Build error:', err);
+        process.exit(1);
     }
 }
 
-archive.directory(urqwDir, false);
-
-archive.pipe(output);
-archive.finalize();
+build();
