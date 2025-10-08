@@ -71,3 +71,13 @@ Workflow:
 	Or you can add the game repository to the UrqW instance repository as a Git submodule. The template structure meets the necessary UrqW requirements for adding games as submodules.
 
 For details, please refer to the UrqW documentation.
+
+## License
+
+UrqW Game Template - a new game template for the UrqW text-based game engine.
+
+Written in 2025 by Nikita Tseykovets <tseikovets@rambler.ru>
+
+To the extent possible under law, the author(s) have dedicated all copyright and related and neighboring rights to this software to the public domain worldwide. This software is distributed without any warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication along with this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
