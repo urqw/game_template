@@ -6,6 +6,7 @@
   "scripts": {
     "build": "node scripts/build.js",
     "docs": "node scripts/docs.js",
+    "extract": "node scripts/extract.js",
     "ifiction": "node scripts/ifiction.js",
     "manifest": "node scripts/manifest.js",
     "release": "node scripts/release.js",
@@ -32,6 +33,7 @@
   "homepage": "https://github.com/urqw/game_template#readme",
   "devDependencies": {
     "archiver": "^7.0.1",
+    "iconv-lite": "^0.7.0",
     "live-server": "^1.2.2",
     "open": "^10.2.0",
     "urqw": "github:urqw/UrqW",
