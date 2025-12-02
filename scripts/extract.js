@@ -119,6 +119,20 @@ function stripHtmlTags(html) {
     }
 }
 
+// Function for opening special URQL constructs
+function openConstructs(text) {
+    // Replace constructions #$ with spaces
+    text = text.replace(/#\$/g, ' ');
+    // Replace constructions #/$ with line breaks
+    text = text.replace(/#\/\$/g, '\n');
+    // Replace constructions ##code$ with characters with the corresponding code
+    text = text.replace(/##(\d+)\$/g, (match, digits) => {
+        const code = parseInt(digits, 10);
+        return String.fromCharCode(code);
+    });
+    return text;
+}
+
 // Function for processing .qst files
 async function processFiles(manifestFile, urqwDir, rootDir) {
     try {
@@ -183,6 +197,8 @@ async function processFiles(manifestFile, urqwDir, rootDir) {
             }
             */
         }
+
+        extractedText = openConstructs(extractedText);
 
         // Extract comments
         const commentRegex = /\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\//g;
