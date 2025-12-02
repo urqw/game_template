@@ -11,7 +11,7 @@ const { DOMParser } = require('xmldom');
 
 const { rootDir, urqwDir, manifestFile, readManifest } = require('./common');
 
-let mode;
+let htmlSupport;
 const parser = new DOMParser();
 const TEXT_NODE = 3;
 const ELEMENT_NODE = 1;
@@ -75,7 +75,7 @@ async function readFileWithEncoding(file, encoding) {
 
 // Function to delete HTML tags from a string
 function stripHtmlTags(html) {
-    if (['ripurq', 'dosurq'].includes(mode)) {
+    if (!htmlSupport) {
         return html;
     }
     if (typeof html !== 'string' || html.trim() === '') {
@@ -136,12 +136,17 @@ function openConstructs(text) {
 // Function for processing .qst files
 async function processFiles(manifestFile, urqwDir, rootDir) {
     try {
-        // Determine the encoding and the URQ mode for reading .qst files
+        // Determine parameters for reading .qst files
         const manifest = await readManifest(manifestFile);
         let encoding = manifest.game_encoding;
         if (!encoding) encoding = 'CP1251';
-        mode = manifest.urq_mode;
+        let mode = manifest.urq_mode;
         if (!mode) mode = 'urqw';
+        htmlSupport = !['ripurq', 'dosurq'].includes(mode);
+        if (
+            manifest.hasOwnProperty('html_support')
+            && typeof manifest.html_support === 'boolean'
+        ) htmlSupport = manifest.html_support;
 
         // Collect a list of .qst files
         const qstFiles = await findQstFiles(urqwDir);
