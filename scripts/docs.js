@@ -1,4 +1,5 @@
 /**
+ * Written in 2025 by Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW Game Template.
  * SPDX-License-Identifier: CC0-1.0
  */
