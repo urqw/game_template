@@ -217,12 +217,12 @@ async function processFiles(manifestFile, urqwDir, rootDir) {
 
         // Write results to files
         await fs.mkdir(tempDir, { recursive: true });
-        const qstTxt = path.join(tempDir, 'qst.txt');
-        await fs.writeFile(qstTxt, extractedText, 'utf-8');
-        const commentsTxt = path.join(tempDir, 'comments.txt');
-        await fs.writeFile(commentsTxt, extractedComments, 'utf-8');
+        const extractedTextFile = path.join(tempDir, 'extracted_text.txt');
+        await fs.writeFile(extractedTextFile, extractedText, 'utf-8');
+        const extractedCommentsFile = path.join(tempDir, 'extracted_comments.txt');
+        await fs.writeFile(extractedCommentsFile, extractedComments, 'utf-8');
 
-        console.log(`Extracted text and comments from ${qstFiles.length} .qst file(s) to qst.txt and comments.txt files at path:\n${tempDir}`);
+        console.log(`Extracted text and comments from ${qstFiles.length} .qst file(s) to extracted_text.txt and extracted_comments.txt files at path:\n${tempDir}`);
         process.exit(0);
     } catch (error) {
          console.error('An error occurred:', error.message);
