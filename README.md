@@ -54,7 +54,7 @@ Workflow:
 	The web server with the running interpreter will automatically track the build update and initiate a reload of the page with the new version of the game. \
 	At any time, you can open the menu in the interpreter interface and expand the Debugging section to see additional information about the running game. The information is constantly updated.
 6. Continue developing the game and debugging it in the running interpreter. In parallel, you can use the version control system to save the development history. Binary builds of the game will not be included in the Git history.
-7. At any time, you can extract the text of descriptions, actions and comments from the game's source code to proofread it separately from the programming language constructs:
+7. At any time, you can extract the text of descriptions, actions, string literals, and comments from the game's source code to proofread it separately from the programming language constructs:
 	```shell
 	npm run extract
 	```

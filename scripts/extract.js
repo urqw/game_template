@@ -157,9 +157,14 @@ async function processFiles(manifestFile, urqwDir, rootDir) {
             const content = await readFileWithEncoding(file, encoding);
             allContent += content + '\n';
         }
-
         // Delete line breaks at the beginning and end of the text
-        let text = allContent.replace(/^[\n\r]+|[\n\r]+$/g, '');
+        allContent = allContent.replace(/^[\n\r]+|[\n\r]+$/g, '');
+
+        // Variable for temporary allContent transformations
+        let text = allContent;
+
+        // Extract text and string literals
+
         // Delete multi-line comments
         text = text.replace(/\/\*[\s\S.]+?\*\//g, '');
         // Delete single-line comments
@@ -180,35 +185,43 @@ async function processFiles(manifestFile, urqwDir, rootDir) {
         // Split the text into an array of lines
         const lines = text.split(/[\n\r]+/);
 
-        // Extract text
         let extractedText = '';
+        let extractedStrings = '';
         for (const line of lines) {
             // Find text in print and button operators
-            const pMatch = line.match(/\bp\s(.*)/i);
             const printMatch = line.match(/\bprint\s(.*)/i);
+            const pMatch = line.match(/\bp\s(.*)/i);
             const printlnMatch = line.match(/\bprintln\s(.*)/i);
             const plnMatch = line.match(/\bpln\s(.*)/i);
             const btnMatch = line.match(/\bbtn\s+.+?,\s*(.+)$/i);
 
             // Add the result of a successful finding as a separate line
-            if (pMatch) extractedText += stripHtmlTags(pMatch[1]) + '\n';
             if (printMatch) extractedText += stripHtmlTags(printMatch[1]) + '\n';
+            if (pMatch) extractedText += stripHtmlTags(pMatch[1]) + '\n';
             if (printlnMatch) extractedText += stripHtmlTags(printlnMatch[1]) + '\n';
             if (plnMatch) extractedText += stripHtmlTags(plnMatch[1]) + '\n';
             if (btnMatch) extractedText += stripHtmlTags(btnMatch[1]) + '\n';
 
-            /*
-            // Extract quoted strings
-            const quotes = line.match(/"([^"]*)"/g);
-            if (quotes) {
-                for (const quote of quotes) {
-                    extractedText += quote.slice(1, -1) + '\n';
+            // Extract string literals (quoted strings)
+            const printingRegex = /\b(p|print|pln|println)\s.*$/gi;
+            const lineWithoutPrinting = line.replace(printingRegex, '');
+            const stringRegex = /"([^"]*)"|'([^']*)'/g;
+            let match;
+            while (match = stringRegex.exec(lineWithoutPrinting)) {
+                let stringValue;
+                if (match[1] !== undefined) {
+                    stringValue = match[1];
+                } else {
+                    stringValue = match[2];
+                }
+                if (stringValue) {
+                    extractedStrings += stringValue + '\n';
                 }
             }
-            */
         }
 
         extractedText = openConstructs(extractedText);
+        extractedStrings = openConstructs(extractedStrings);
 
         // Extract multi-line comments (/* ... */)
         const multiLineCommentRegex = /\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\//g;
@@ -242,10 +255,12 @@ const singleLineCommentRegex = /;.*$/gm;
         await fs.mkdir(tempDir, { recursive: true });
         const extractedTextFile = path.join(tempDir, 'extracted_text.txt');
         await fs.writeFile(extractedTextFile, extractedText, 'utf-8');
+        const extractedStringsFile = path.join(tempDir, 'extracted_strings.txt');
+        await fs.writeFile(extractedStringsFile, extractedStrings, 'utf-8');
         const extractedCommentsFile = path.join(tempDir, 'extracted_comments.txt');
         await fs.writeFile(extractedCommentsFile, extractedComments, 'utf-8');
 
-        console.log(`Extracted text and comments from ${qstFiles.length} .qst file(s) to extracted_text.txt and extracted_comments.txt files at path:\n${tempDir}`);
+        console.log(`Extracted text, string literals and comments from ${qstFiles.length} .qst file(s) to extracted_text.txt, extracted_strings.txt and extracted_comments.txt files at path:\n${tempDir}`);
         process.exit(0);
     } catch (error) {
          console.error('An error occurred:', error.message);
