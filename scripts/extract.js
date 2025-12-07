@@ -160,8 +160,13 @@ async function processFiles(manifestFile, urqwDir, rootDir) {
 
         // Delete line breaks at the beginning and end of the text
         let text = allContent.replace(/^[\n\r]+|[\n\r]+$/g, '');
-        // Delete comments
+        // Delete multi-line comments
         text = text.replace(/\/\*[\s\S.]+?\*\//g, '');
+        // Delete single-line comments
+        // Only for compatibility modes with RipURQ, URQ_DOS and AkURQ
+        if (['ripurq', 'dosurq', 'akurq'].includes(mode)) {
+            text = text.replace(/;.*$/gm, '');
+        }
         // Replace ampersands with line breaks
         text = text.replace(/&/g, '\n');
         // Replace the else operators with line breaks
@@ -205,13 +210,31 @@ async function processFiles(manifestFile, urqwDir, rootDir) {
 
         extractedText = openConstructs(extractedText);
 
-        // Extract comments
-        const commentRegex = /\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\//g;
+        // Extract multi-line comments (/* ... */)
+        const multiLineCommentRegex = /\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\//g;
         let matches = [];
         let match;
-        while (match = commentRegex.exec(allContent)) {
+        while (match = multiLineCommentRegex.exec(allContent)) {
             let commentText = match[0].replace(/^\/\*|\*\/$/g, '').trim();
-            matches.push(commentText);
+            if (commentText) {
+                matches.push(commentText);
+            }
+        }
+        // Extract single-line comments (; ... to the end of the line )
+        // Only for compatibility modes with RipURQ, URQ_DOS and AkURQ
+        if (['ripurq', 'dosurq', 'akurq'].includes(mode)) {
+           // Delete multi-line comments
+           text = allContent.replace(/\/\*[\s\S.]+?\*\//g, '');
+const singleLineCommentRegex = /;.*$/gm;
+            let singleLineMatches = text.match(singleLineCommentRegex);
+            if (singleLineMatches) {
+                singleLineMatches.forEach(comment => {
+                    let commentText = comment.slice(1).trim();
+                    if (commentText) {
+                        matches.push(commentText);
+                    }
+                });
+            }
         }
         let extractedComments = matches.join('\n\n');
 
