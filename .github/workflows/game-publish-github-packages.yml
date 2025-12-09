@@ -1,0 +1,52 @@
+name: Deploy content to Pages
+
+on:
+  push:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  create-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Create ZIP archive
+        run: |
+          cd urqw && zip -r urqw.zip .
+      - name: Prepare static files for GitHub Pages
+        run: |
+          mkdir -p public
+          cp urqw/urqw.zip public/
+      - name: Upload ZIP as artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload only the public/ directory
+          path: public/
+  deploy:
+    needs: create-zip
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
