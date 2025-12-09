@@ -31,6 +31,7 @@ Additional actions if desired:
 * You can delete the .git directory and initialize the Git repository again to start your new game project from scratch.
 * You can edit the package data in the package.json file to match it to your new game project.
 * You can replace the license of this package with any other, as well as add or change other files.
+* You can set up a GitHub Actions workflow to automatically build and publish your game with the latest updates (see GitHub Actions Configuration).
 
 Workflow:
 
@@ -71,6 +72,25 @@ Workflow:
 	Or you can add the game repository to the UrqW instance repository as a Git submodule. The template structure meets the necessary UrqW requirements for adding games as submodules.
 
 For details, please refer to the UrqW documentation.
+
+## GitHub Actions Configuration
+
+The game template also includes a pre-configured GitHub Actions workflow file. This allows you to configure automatic build and publish of the game with every push to the master branch.
+
+The file is located in: .github/workflows/game-publish-github-packages.yml
+
+To use this workflow, you need to configure GitHub Pages in your repository. To do this, go to Settings, then Pages (under the Code and automation heading). You can also directly open the page at `https://github.com/%OWNER%/%REPO%/settings/pages`.
+
+On this page, under the Build and deployment heading in the Source menu, select GitHub Actions.
+
+After this, with every push to the master branch, GitHub Actions will automatically archive the urqw/ folder, and the archived file (urqw.zip) will be available at `https://%OWNER%.github.io/%REPO%/urqw.zip`.
+
+This game package with the most recent content updates can then be run in latest UrqW engine at \
+`https://urqw.github.io/UrqW/?url=https://%OWNER%.github.io/%REPO%/urqw.zip`.
+
+This way, you can publish games without relying on any UrqW catalogs, and always provide a permanent direct link to the version of the game with the latest updates. However, you may still add your game to UrqW catalogs to reach a wider audience.
+
+If you don't need the GitHub Actions workflow, simply remove the corresponding configuration file from the project.
 
 ## License
 
