@@ -86,7 +86,10 @@ On this page, under the Build and deployment heading in the Source menu, select 
 After this, with every push to the master branch, GitHub Actions will automatically archive the urqw/ folder, and the archived file (urqw.zip) will be available at `https://%OWNER%.github.io/%REPO%/urqw.zip`.
 
 This game package with the most recent content updates can then be run in latest UrqW engine at \
-`https://urqw.github.io/UrqW/?url=https://%OWNER%.github.io/%REPO%/urqw.zip`.
+`https://urqw.github.io/UrqW/?url=https://%OWNER%.github.io/%REPO%/urqw.zip` \
+or at the shorter address \
+`https://%OWNER%.github.io/%REPO%` \
+(the short URL will automatically redirect to the full address).
 
 This way, you can publish games without relying on any UrqW catalogs, and always provide a permanent direct link to the version of the game with the latest updates. However, you may still add your game to UrqW catalogs to reach a wider audience.
 
