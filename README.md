@@ -55,16 +55,12 @@ Workflow:
 	The web server with the running interpreter will automatically track the build update and initiate a reload of the page with the new version of the game. \
 	At any time, you can open the menu in the interpreter interface and expand the Debugging section to see additional information about the running game. The information is constantly updated.
 6. Continue developing the game and debugging it in the running interpreter. In parallel, you can use the version control system to save the development history. Binary builds of the game will not be included in the Git history.
-7. At any time, you can extract the text of descriptions, actions, string literals, and comments from the game's source code to proofread it separately from the programming language constructs:
-	```shell
-	npm run extract
-	```
-8. Once the game is ready to be published (or a major update), you can create (or update) an iFiction record with the game's metadata:
+7. Once the game is ready to be published (or a major update), you can create (or update) an iFiction record with the game's metadata:
 	```shell
 	npm run ifiction
 	```
 	Enter the data that will be requested. See the [Treaty of Babel](https://babel.ifarchive.org) for more details.
-9. Once the game is ready, you can build the release as an archive:
+8. Once the game is ready, you can build the release as an archive:
 	```shell
 	npm run release
 	```
@@ -72,6 +68,37 @@ Workflow:
 	Or you can add the game repository to the UrqW instance repository as a Git submodule. The template structure meets the necessary UrqW requirements for adding games as submodules.
 
 For details, please refer to the UrqW documentation.
+
+## Utilities
+
+The following additional utilities are available for game development:
+
+* **Extracting game text.** \
+	You can extract the text of descriptions, actions, string literals, and comments from the game's source code to proofread it separately from the programming language constructs:
+	```shell
+	npm run extract
+	```
+	(All files with the .qst extension in the urqw directory are processed.)
+* **Working with encrypted game files in qs1 format.** \
+	You can encrypt a game file to make it difficult to view its source code:
+	```shell
+	npm run qs1 %source_file%.qst
+	```
+	or
+	```shell
+	npm run qs1 %source_file%.qst %encrypted_file%.qs1
+	```
+	(The reverse operation is also supported.)
+* **Working with encrypted game files in qs2 format.** \
+	You can encrypt a game file to make it difficult to view its source code:
+	```shell
+	npm run qs2 %source_file%.qst
+	```
+	or
+	```shell
+	npm run qs2 %source_file%.qst %encrypted_file%.qs2
+	```
+	(The reverse operation is also supported.)
 
 ## GitHub Actions Configuration
 
@@ -99,7 +126,7 @@ If you don't need the GitHub Actions workflow, simply remove the corresponding c
 
 UrqW Game Template - a new game template for the UrqW text-based game engine.
 
-Written in 2025 by Nikita Tseykovets <tseikovets@rambler.ru>
+Written in 2025, 2026 by Nikita Tseykovets <tseikovets@rambler.ru>
 
 To the extent possible under law, the author(s) have dedicated all copyright and related and neighboring rights to this software to the public domain worldwide. This software is distributed without any warranty.
 

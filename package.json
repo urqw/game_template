@@ -9,6 +9,8 @@
     "extract": "node scripts/extract.js",
     "ifiction": "node scripts/ifiction.js",
     "manifest": "node scripts/manifest.js",
+    "qs1": "node scripts/qs1.js",
+    "qs2": "node scripts/qs2.js",
     "release": "node scripts/release.js",
     "postinstall": "cd node_modules/urqw && npm install && npm run gen-docs",
     "start": "npx live-server --open=node_modules/urqw/index.html?debug=1#urqw --watch=node_modules/urqw/quests/urqw.zip",
