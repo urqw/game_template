@@ -6,6 +6,19 @@ This template assumes the use of additional development tools such as [Git](http
 
 However, game development for UrqW can be done without all of this. See the documentation of UrqW for more details.
 
+## Verifying Development Environment
+
+To confirm that your workspace is ready, run the following commands in your terminal:
+
+```shell
+git -v
+npm -v
+```
+
+You should see the version numbers for each tool printed to the console.  
+
+If either command returns an error (e.g., "command not found" or similar), your development environment requires additional setup. This typically means the tools need to be installed or their installation paths need to be added to your system's `PATH` variable.
+
 ## Usage
 
 Preliminary preparation:
