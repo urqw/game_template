@@ -7,6 +7,6 @@
 const opn = require('opn');
 const path = require('path');
 
-const docsPath = path.resolve(__dirname, '../node_modules/urqw/docs/index.html');
+const docsPath = path.resolve(__dirname, '../engine/docs/index.html');
 
 opn(docsPath);

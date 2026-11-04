@@ -13,7 +13,7 @@ const { rootDir, urqwDir } = require('./common');
 
 async function build() {
     try {
-        const targetDir = path.join(rootDir, 'node_modules', 'urqw', 'quests');
+        const targetDir = path.join(rootDir, 'engine', 'quests');
         const targetFile = path.join(targetDir, 'urqw.zip');
 
         await fsp.mkdir(targetDir, { recursive: true });

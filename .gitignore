@@ -1,4 +1,5 @@
 .idea
+/engine
 /node_modules
 /release
 /temp
