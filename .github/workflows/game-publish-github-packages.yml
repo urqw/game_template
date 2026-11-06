@@ -54,7 +54,7 @@ jobs:
           </html>
           EOF
       - name: Upload the contents of the public/ directory as artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           # Upload only the public/ directory
           path: public/
