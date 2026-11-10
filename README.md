@@ -123,10 +123,22 @@ To use this workflow, you need to configure GitHub Pages in your repository. To 
 
 On this page, under the Build and deployment heading in the Source menu, select GitHub Actions.
 
-After this, with every push to the master branch, GitHub Actions will automatically archive the urqw/ folder, and the archived file (urqw.zip) will be available at `https://%OWNER%.github.io/%REPO%/urqw.zip`.
+This can also be enabled via the GitHub CLI using the command:
+
+```shell
+gh api --method POST repos/%OWNER%/%REPO%/pages -f build_type=workflow
+```
+
+If the command fails with 409 Conflict due to pre-existing GitHub Pages configurations in this repository, use the following command:
+
+```shell
+gh api --method PUT repos/%OWNER%/%REPO%/pages -f build_type=workflow
+```
+
+After this, with every push to the master branch, GitHub Actions will automatically archive the urqw/ folder, and the archived file (%REPO%.zip) will be available at `https://%OWNER%.github.io/%REPO%/%REPO%.zip`.
 
 This game package with the most recent content updates can then be run in latest UrqW engine at \
-`https://urqw.github.io/UrqW/?url=https://%OWNER%.github.io/%REPO%/urqw.zip` \
+`https://urqw.github.io/UrqW/?url=https://%OWNER%.github.io/%REPO%/%REPO%.zip` \
 or at the shorter address \
 `https://%OWNER%.github.io/%REPO%` \
 (the short URL will automatically redirect to the full address).
