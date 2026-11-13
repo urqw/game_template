@@ -66,7 +66,10 @@ Workflow:
 	npm run build
 	```
 	The web server with the running interpreter will automatically track the build update and initiate a reload of the page with the new version of the game. \
-	At any time, you can open the menu in the interpreter interface and expand the Debugging section to see additional information about the running game. The information is constantly updated.
+	At any time, you can open the menu in the interpreter interface and expand the Debugging section to see additional information about the running game. The information is constantly updated. \
+	Also, note the following two checkboxes in the Settings section of the menu:
+	* "When loading, continue the game with saving progress" - You may want to uncheck this option so that the player does not attempt to resume the rebuilt game from the automatic save of the previous build.
+	* "Confirmation of page closing" - You may want to uncheck this option to allow the game to restart during rebuilding without requiring confirmation in the dialog.
 6. Continue developing the game and debugging it in the running interpreter. In parallel, you can use the version control system to save the development history. Binary builds of the game will not be included in the Git history.
 7. Once the game is ready to be published (or a major update), you can create (or update) an iFiction record with the game's metadata:
 	```shell
