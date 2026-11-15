@@ -138,10 +138,10 @@ If the command fails with 409 Conflict due to pre-existing GitHub Pages configur
 gh api --method PUT repos/%OWNER%/%REPO%/pages -f build_type=workflow
 ```
 
-After this, with every push to the master branch, GitHub Actions will automatically archive the urqw/ folder, and the archived file (%REPO%.zip) will be available at `https://%OWNER%.github.io/%REPO%/%REPO%.zip`.
+After this, with every push to the master branch, GitHub Actions will automatically archive the urqw/ folder, and the archived file (%REPO%.qsz) will be available at `https://%OWNER%.github.io/%REPO%/%REPO%.qsz`.
 
 This game package with the most recent content updates can then be run in latest UrqW engine at \
-`https://urqw.github.io/UrqW/?url=https://%OWNER%.github.io/%REPO%/%REPO%.zip` \
+`https://urqw.github.io/UrqW/?url=https://%OWNER%.github.io/%REPO%/%REPO%.qsz` \
 or at the shorter address \
 `https://%OWNER%.github.io/%REPO%` \
 (the short URL will automatically redirect to the full address).

@@ -19,7 +19,7 @@ async function packRelease() {
         // Name and version of build
         const packageData = await fsp.readFile(packageFile, 'utf8');
         const { name, version } = JSON.parse(packageData);
-        const buildName = `${name}_${version}.zip`;
+        const buildName = `${name}_${version}.qsz`;
 
         // Check the existence and clean the release directory
         try {

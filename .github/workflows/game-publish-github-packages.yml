@@ -33,11 +33,11 @@ jobs:
           fetch-depth: 1
       - name: Create ZIP archive
         run: |
-          cd urqw && zip -r "${REPO_NAME}.zip" .
+          cd urqw && zip -r "${REPO_NAME}.qsz" .
       - name: Prepare static files for GitHub Pages
         run: |
           mkdir -p public
-          cp "urqw/${REPO_NAME}.zip" public/
+          cp "urqw/${REPO_NAME}.qsz" public/
       - name: Generate index.html with dynamic URL
         run: |
           cat << EOF > public/index.html
@@ -46,10 +46,10 @@ jobs:
           <head>
             <meta charset="utf-8">
             <title>Redirecting...</title>
-            <meta http-equiv="refresh" content="0; url=https://urqw.github.io/UrqW/?url=https://${REPO_OWNER}.github.io/${REPO_NAME}/${REPO_NAME}.zip">
+            <meta http-equiv="refresh" content="0; url=https://urqw.github.io/UrqW/?url=https://${REPO_OWNER}.github.io/${REPO_NAME}/${REPO_NAME}.qsz">
           </head>
           <body>
-            <p>Redirecting to <a href="https://urqw.github.io/UrqW/?url=https://${REPO_OWNER}.github.io/${REPO_NAME}/${REPO_NAME}.zip">https://urqw.github.io/UrqW/?url=https://${REPO_OWNER}.github.io/${REPO_NAME}/${REPO_NAME}.zip</a>...</p>
+            <p>Redirecting to <a href="https://urqw.github.io/UrqW/?url=https://${REPO_OWNER}.github.io/${REPO_NAME}/${REPO_NAME}.qsz">https://urqw.github.io/UrqW/?url=https://${REPO_OWNER}.github.io/${REPO_NAME}/${REPO_NAME}.qsz</a>...</p>
           </body>
           </html>
           EOF
