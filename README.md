@@ -76,11 +76,11 @@ Workflow:
 	npm run ifiction
 	```
 	Enter the data that will be requested. See the [Treaty of Babel](https://babel.ifarchive.org) for more details.
-8. Once the game is ready, you can build the release as an archive:
+8. Once the game is ready, you can build the release as a single game package file:
 	```shell
 	npm run release
 	```
-	This archive is suitable for running in UrqW. \
+	This file is suitable for running in UrqW. \
 	Or you can add the game repository to the UrqW instance repository as a Git submodule. The template structure meets the necessary UrqW requirements for adding games as submodules.
 
 For details, please refer to the UrqW documentation.
@@ -138,7 +138,7 @@ If the command fails with 409 Conflict due to pre-existing GitHub Pages configur
 gh api --method PUT repos/%OWNER%/%REPO%/pages -f build_type=workflow
 ```
 
-After this, with every push to the master branch, GitHub Actions will automatically archive the urqw/ folder, and the archived file (%REPO%.qsz) will be available at `https://%OWNER%.github.io/%REPO%/%REPO%.qsz`.
+After this, with every push to the master branch, GitHub Actions will automatically package the urqw/ folder, and this single file (%REPO%.qsz) will be available at `https://%OWNER%.github.io/%REPO%/%REPO%.qsz`.
 
 This game package with the most recent content updates can then be run in latest UrqW engine at \
 `https://urqw.github.io/UrqW/?url=https://%OWNER%.github.io/%REPO%/%REPO%.qsz` \
